@@ -4,6 +4,8 @@ const cloudinary = require("../utils/cloudinary");
 const upload = require("../utils/multer");
 const Product = require("../model/productModel");
 
+const ApiFeatures = require("../utils/apiFeatures");
+
 // Add a New product
 router.post("/", upload.single("image"), async (req, res) => {
   try {
@@ -33,32 +35,32 @@ router.post("/", upload.single("image"), async (req, res) => {
   }
 });
 
-// Get All products
-router.get("/all", async (req, res) => {
-  // Get the search term from the query string
-  const { name } = req.query;
-  console.log(req.query);
-  const regex = new RegExp(name, "i"); // Case-insensitive search
+// // Get All products
+// router.get("/all", async (req, res) => {
+//   // Get the search term from the query string
+//   const { name } = req.query;
+//   console.log(req.query);
+//   const regex = new RegExp(name, "i"); // Case-insensitive search
 
-  try {
-    let product = await Product.find({ name: { $regex: regex } })
-      .populate({
-        path: "category_id",
-        select: "name",
-      })
-      .populate({
-        path: "brand_id",
-        select: "name",
-      });
+//   try {
+//     let product = await Product.find({ name: { $regex: regex } })
+//       .populate({
+//         path: "category_id",
+//         select: "name",
+//       })
+//       .populate({
+//         path: "brand_id",
+//         select: "name",
+//       });
 
-    res.json({
-      result: product.length,
-      product: product,
-    });
-  } catch (err) {
-    console.log(err);
-  }
-});
+//     res.json({
+//       result: product.length,
+//       product: product,
+//     });
+//   } catch (err) {
+//     console.log(err);
+//   }
+// });
 
 // Get All products with pagination
 // Route to handle pagination requests
